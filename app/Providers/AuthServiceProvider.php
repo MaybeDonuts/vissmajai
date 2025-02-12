@@ -22,21 +22,26 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Gate::define('delete-products', function ($user) {
-            return $user->role === 'admin'() || $user->role === 'employee'();
-        });
-    
-        Gate::define('manage-orders', function ($user) {
-            return $user->role === 'admin'() || $user->role === 'employee'();
-        });
-
         Gate::define('manage-users', function ($user) {
-            dd($user->role); // Временный `dd()` для проверки
-            return $user->role === 'admin';
+            return $user->role === 'admin'; // Только админ управляет пользователями
         });
     
         Gate::define('manage-products', function ($user) {
-            return $user->role === 'admin'() || $user->role === 'employee'();
+            return in_array($user->role, ['admin', 'employee']); // Админ и сотрудник могут редактировать товары
+        });
+    
+        Gate::define('delete-products', function ($user) {
+            return in_array($user->role, ['admin', 'employee']); // Теперь сотрудник тоже может удалять
+        });
+    
+        Gate::define('manage-orders', function ($user) {
+            return in_array($user->role, ['admin', 'employee']); // Админ и сотрудник управляют заказами
         });
     }
+    
 }
+
+
+
+
+

@@ -44,11 +44,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });
 
-// **Админ-панель (доступ только для администраторов)**
+// Админка (только для админа)
 Route::middleware(['auth', 'can:manage-users'])->group(function () {
     Route::get('/admin', function () {
-        return "Вы зашли в админ-панель";
+        return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+    Route::put('/admin/users/{user}/role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
+    Route::put('/admin/users/{user}/block', [UserController::class, 'block'])->name('admin.users.block');
 });
 
 Route::middleware(['auth', 'can:manage-users'])->group(function () {
@@ -58,25 +62,25 @@ Route::middleware(['auth', 'can:manage-users'])->group(function () {
 });
 
 
-// **Управление товарами (доступно сотрудникам и администраторам)**
-Route::middleware(['auth'])->group(function () {
-    Route::middleware(['can:manage-products'])->group(function () {
-        Route::get('/admin/products', [ProductController::class, 'adminIndex'])->name('admin.products');
-        Route::get('/admin/products/create', [ProductController::class, 'create'])->name('admin.products.create');
-        Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');
-        Route::get('/admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
-        Route::put('/admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
-        Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
-    });
+// Управление товарами (для сотрудников и админов)
+Route::middleware(['auth', 'can:manage-products'])->group(function () {
+    Route::get('/admin/products', [ProductController::class, 'adminIndex'])->name('admin.products');
+    Route::get('/admin/products/create', [ProductController::class, 'create'])->name('admin.products.create');
+    Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');
+    Route::get('/admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
 });
 
-// **Управление заказами (для сотрудников и администраторов)**
-Route::middleware(['auth'])->group(function () {
-    Route::middleware(['can:manage-orders'])->group(function () {
-        Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders');
-        Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
-        Route::post('/admin/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.status');
-    });
+// Удаление товаров (для сотрудников и админов)
+Route::middleware(['auth', 'can:delete-products'])->group(function () {
+    Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+});
+
+// Управление заказами (для сотрудников и админов)
+Route::middleware(['auth', 'can:manage-orders'])->group(function () {
+    Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders');
+    Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+    Route::post('/admin/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.status');
 });
 
 // **Аутентификация**

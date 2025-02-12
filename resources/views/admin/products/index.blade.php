@@ -10,6 +10,21 @@
         </div>
     @endif
 
+    <td>
+    @can('manage-products')
+        <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning btn-sm">Редактировать</a>
+    @endcan
+
+    @can('delete-products')
+        <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+        </form>
+    @endcan
+</td>
+
+
     <!-- Кнопка для добавления нового товара -->
     @if(auth()->user()->isAdmin() || auth()->user()->isEmployee())
     <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Добавить товар</a>

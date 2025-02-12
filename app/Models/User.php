@@ -21,8 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'role', // Нужно, чтобы Laravel загружал role при авторизации
     ];
+    
+    protected $casts = [
+        'role' => 'string', // Принудительно загружаем role как строку
+    ];
+    
     
 
     /**
@@ -78,10 +83,6 @@ class User extends Authenticatable
     {
         return $this->role === 'guest';
     }
-    
-    protected $casts = [
-        'role' => 'string',
-    ];
-    
+
     
 }
