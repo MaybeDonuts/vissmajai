@@ -41,15 +41,11 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    protected function authenticated(Request $request, $user)
-    {
-        if ($user->is_blocked) {
-            Auth::logout();
-            return redirect()->route('login')->with('error', 'Ваш аккаунт заблокирован.');
-        }
-        $request->session()->regenerate(); // Пересоздаём сессию
-        $user->refresh(); // Принудительно загружаем свежие данные пользователя
-    }
+protected function authenticated(Request $request, $user)
+{
+    $request->session()->regenerate();
+    $user->refresh();
+}
 
     public function logout(Request $request)
     {
