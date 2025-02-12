@@ -1,6 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+
+<td>
+    @can('manage-orders')
+        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-primary btn-sm">Просмотр</a>
+    @endcan
+
+    @can('manage-orders')
+        <form action="{{ route('admin.orders.status', $order->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-success btn-sm">Обновить статус</button>
+        </form>
+    @endcan
+</td>
+
+
 <div class="container">
     <h1>Управление заказами</h1>
 
