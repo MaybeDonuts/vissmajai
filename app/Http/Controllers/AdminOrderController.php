@@ -10,7 +10,6 @@ class AdminOrderController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:admin,employee'); // Доступ только для админов и сотрудников
     }
 
     // Отображение всех заказов
@@ -73,6 +72,7 @@ class AdminOrderController extends Controller
         $orders = Order::where('viewed', false)->latest()->paginate(10);
         return view('admin.orders.new', compact('orders'));
     }
+    
 
     public function markViewed(Order $order)
     {

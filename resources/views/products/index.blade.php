@@ -65,6 +65,12 @@
                 <th>Действия</th>
             </tr>
         </thead>
+        <footer class="footer">
+            <div class="container">
+                <p>Телефон: +37112345678 | Email: support@vissmajai.lv</p>
+            </div>
+        </footer>
+
         <tbody>
             @foreach($products as $product)
                 <tr>
@@ -89,23 +95,21 @@
                         </form>
                     </td>
                     <td>
-    @if($product->discount > 0 && 
-        (is_null($product->discount_start) || $product->discount_start <= now()) && 
-        (is_null($product->discount_end) || $product->discount_end >= now()))
-        <span class="text-danger">
-            {{ number_format($product->price * (1 - $product->discount / 100), 2) }} €
-        </span>
-        <small class="text-muted"><del>{{ number_format($product->price, 2) }} €</del></small>
-    @else
-        {{ number_format($product->price, 2) }} €
-    @endif
-</td>
-
+                        @if($product->discount > 0 && 
+                            (is_null($product->discount_start) || $product->discount_start <= now()) && 
+                            (is_null($product->discount_end) || $product->discount_end >= now()))
+                            <span class="text-danger">
+                                {{ number_format($product->price * (1 - $product->discount / 100), 2) }} €
+                            </span>
+                            <small class="text-muted"><del>{{ number_format($product->price, 2) }} €</del></small>
+                        @else
+                            {{ number_format($product->price, 2) }} €
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
     <!-- Пагинация -->
     {{ $products->links() }}
 </div>

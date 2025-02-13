@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
+<td>
+@foreach($orders as $order)
+    <tr>
+        <td>{{ $order->id }}</td>
+        <td>{{ $order->created_at }}</td>
+        <td>{{ $order->status }}</td>
+    </tr>
+@endforeach
+
+
+    @can('manage-orders')
+        <form action="{{ route('admin.orders.status', $order->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-success btn-sm">Обновить статус</button>
+        </form>
+    @endcan
+</td>
+
+
 <div class="container">
     <h1>Управление заказами</h1>
 

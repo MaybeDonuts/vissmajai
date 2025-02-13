@@ -9,7 +9,7 @@
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-header">Пользователи</div>
                     <div class="card-body">
-                        <h4 class="card-title">{{ $usersCount }}</h4>
+                        <h4 class="card-title">{{ $usersCount ?? 'Нет данных' }}</h4>
                         <a href="{{ route('admin.users') }}" class="btn btn-light">Управление</a>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                 <div class="card text-white bg-success mb-3">
                     <div class="card-header">Заказы</div>
                     <div class="card-body">
-                        <h4 class="card-title">{{ $ordersCount }}</h4>
+                        <h4 class="card-title">{{ $ordersCount ?? 'Нет данных' }}</h4>
                         <a href="{{ route('admin.orders') }}" class="btn btn-light">Просмотр</a>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="card text-white bg-warning mb-3">
                     <div class="card-header">Товары</div>
                     <div class="card-body">
-                        <h4 class="card-title">{{ $productsCount }}</h4>
+                        <h4 class="card-title">{{ $productsCount ?? 'Нет данных' }}</h4>
                         <a href="{{ route('products.index') }}" class="btn btn-light">Каталог</a>
                     </div>
                 </div>

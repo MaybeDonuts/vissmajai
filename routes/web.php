@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Gate;
 
 // Главная страница
 Route::get('/', function () {
@@ -18,6 +19,8 @@ Route::get('/', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/discounted-products', [ProductController::class, 'discounted'])->name('products.discounted');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+
 
 // Корзина (доступна всем)
 Route::middleware(['auth'])->group(function () {
@@ -68,6 +71,7 @@ Route::middleware(['auth', 'can:manage-products'])->group(function () {
     Route::get('/admin/products/create', [ProductController::class, 'create'])->name('admin.products.create');
     Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');
     Route::get('/admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/admin/products/{product}/discount', [ProductController::class, 'updateDiscount'])->name('admin.update-discount');
     Route::put('/admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
 });
 
@@ -79,10 +83,14 @@ Route::middleware(['auth', 'can:delete-products'])->group(function () {
 // Управление заказами (для сотрудников и админов)
 Route::middleware(['auth', 'can:manage-orders'])->group(function () {
     Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders');
+    Route::get('/admin/orders/new', [AdminOrderController::class, 'newOrders'])->name('admin.orders.new');
     Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
     Route::post('/admin/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.status');
+    Route::post('/admin/orders/{order}/viewed', [AdminOrderController::class, 'markViewed'])->name('admin.orders.markViewed'); // ✅ ДОБАВЛЯЕМ ЭТОТ МАРШРУТ
 });
+
 
 // **Аутентификация**
 Auth::routes();
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::get('/popular-products', [ProductController::class, 'popular'])->name('products.popular');

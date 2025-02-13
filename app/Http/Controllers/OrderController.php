@@ -115,5 +115,12 @@ class OrderController extends Controller
     
         return view('profile.orders', compact('orders'));
     }
+
+    public function history()
+    {
+        $orders = Order::where('user_id', auth()->id())->latest()->get();
+        return view('orders.history', compact('orders'));
+    }
+    
     
 }

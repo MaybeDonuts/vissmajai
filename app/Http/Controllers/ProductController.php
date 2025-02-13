@@ -212,10 +212,9 @@ class ProductController extends Controller
     
         return view('products.discounted', compact('products'));
     }
-
     public function adminIndex()
     {
-        $products = Product::latest()->paginate(10);
+        $products = Product::paginate(10); // Загружаем все товары
         return view('admin.products.index', compact('products'));
     }
     

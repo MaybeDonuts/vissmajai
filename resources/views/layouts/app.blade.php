@@ -12,8 +12,24 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <<link href="https://fonts.googleapis.com/css2?family=Colibri&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bolt&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Colibri', sans-serif;
+        color: black;
+        background-color: white;
+    }
+    h1, h2, h3, h4 {
+        font-family: 'Bolt', sans-serif;
+    }
+    .btn {
+        font-size: 12px;
+    }
+</style>
 
-    <!-- Scripts -->
+
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>

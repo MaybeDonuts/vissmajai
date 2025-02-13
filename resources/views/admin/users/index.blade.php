@@ -41,17 +41,6 @@
                             </button>
                         </form>
                     </td>
-                    <td>
-    <form action="{{ route('admin.users.updateRole', $user->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <select name="role" onchange="this.form.submit()" class="form-select">
-            <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>Пользователь</option>
-            <option value="employee" {{ $user->role == 'employee' ? 'selected' : '' }}>Сотрудник</option>
-            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Администратор</option>
-        </select>
-    </form>
-</td>
 
                 </tr>
             @endforeach

@@ -43,38 +43,6 @@
 
         <button type="submit" class="btn btn-warning mt-2">Изменить пароль</button>
     </form>
-
     <hr>
-
-    <h3>История заказов</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Дата</th>
-                <th>Сумма</th>
-                <th>Статус</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach($orders as $order)
-        <tr>
-            <td>{{ $order->created_at->format('d.m.Y H:i') }}</td>
-            <td>{{ $order->total_price }} €</td>
-            <td>{{ $order->status }}</td>
-            <td>
-                @if($order->status == 'pending')
-                    <form method="POST" action="{{ route('orders.cancel', $order->id) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm">Отменить</button>
-                    </form>
-                @else
-                    <span class="text-muted">Отмена невозможна</span>
-                @endif
-            </td>
-        </tr>
-    @endforeach
-</tbody>
-            </table>
 </div>
 @endsection

@@ -6,3 +6,29 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.navbar {
+    background-color: #007bff; // Синий фон
+    .navbar-brand, .nav-link {
+        color: white !important;
+    }
+}
+
+.footer {
+    background-color: grey;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    background: white;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
